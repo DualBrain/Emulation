@@ -7,6 +7,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emulation.Core", "Source\Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emulation.Core.Tests", "Source\Core\Emulation.Core.Tests\Emulation.Core.Tests.csproj", "{07FE0C7B-E16C-4ABD-9839-63724A69034B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{90641997-545E-48B4-A9D8-D3E97F7229C3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Emulator-6502", "Emulator-6502", "{1F968903-C928-496D-B6FE-3DEDDE6117AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emulation.6502", "Source\Emulator-6502\Emulation.6502\Emulation.6502.csproj", "{86221E48-A427-4ACF-ACEE-54F03129A250}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emulation.6502.Tests", "Source\Emulator-6502\Emulation.6502.Tests\Emulation.6502.Tests.csproj", "{46B92D53-393F-4E2B-916F-F969CF3342A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +29,22 @@ Global
 		{07FE0C7B-E16C-4ABD-9839-63724A69034B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07FE0C7B-E16C-4ABD-9839-63724A69034B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07FE0C7B-E16C-4ABD-9839-63724A69034B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86221E48-A427-4ACF-ACEE-54F03129A250}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86221E48-A427-4ACF-ACEE-54F03129A250}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86221E48-A427-4ACF-ACEE-54F03129A250}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86221E48-A427-4ACF-ACEE-54F03129A250}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46B92D53-393F-4E2B-916F-F969CF3342A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46B92D53-393F-4E2B-916F-F969CF3342A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46B92D53-393F-4E2B-916F-F969CF3342A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46B92D53-393F-4E2B-916F-F969CF3342A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A6B0927A-0C99-4A28-9681-511F26F25CFE} = {90641997-545E-48B4-A9D8-D3E97F7229C3}
+		{07FE0C7B-E16C-4ABD-9839-63724A69034B} = {90641997-545E-48B4-A9D8-D3E97F7229C3}
+		{86221E48-A427-4ACF-ACEE-54F03129A250} = {1F968903-C928-496D-B6FE-3DEDDE6117AD}
+		{46B92D53-393F-4E2B-916F-F969CF3342A1} = {1F968903-C928-496D-B6FE-3DEDDE6117AD}
 	EndGlobalSection
 EndGlobal
