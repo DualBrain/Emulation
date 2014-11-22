@@ -87,6 +87,30 @@ namespace Emulation.Core
             return ReadByteCore(address);
         }
 
+        public ushort ReadUInt16(int address)
+        {
+            if (address < 0 || address > this.size - 2)
+            {
+                throw new ArgumentOutOfRangeException("address");
+            }
+
+            // We take a faster path if the entire value can be read from the current page
+            if (address >= this.currentPageStart && address < this.nextPageStart - 2)
+            {
+                var page = this.currentPage;
+                var index = address - this.currentPageStart;
+
+                return (ushort)((page[index] << 8) | page[index + 1]);
+            }
+            else
+            {
+                var b1 = ReadByteCore(address);
+                var b2 = ReadByteCore(address + 1);
+
+                return (ushort)((b1 << 8) | b2);
+            }
+        }
+
         public void WriteByte(int address, byte value)
         {
             if (address < 0 || address > this.size - 1)
@@ -95,6 +119,32 @@ namespace Emulation.Core
             }
 
             WriteByteCore(address, value);
+        }
+
+        public void WriteUInt16(int address, ushort value)
+        {
+            if (address < 0 || address > this.size - 2)
+            {
+                throw new ArgumentOutOfRangeException("address");
+            }
+
+            var b1 = (byte)(value >> 8);
+            var b2 = (byte)(value & 0xff);
+
+            // We take a faster path if the entire value can be written to the current page
+            if (address >= this.currentPageStart && address < this.nextPageStart - 2)
+            {
+                var page = this.currentPage;
+                var index = address - this.currentPageStart;
+
+                page[index] = b1;
+                page[index + 1] = b2;
+            }
+            else
+            {
+                WriteByteCore(address, b1);
+                WriteByteCore(address + 1, b2);
+            }
         }
 
         public int Size => size;
