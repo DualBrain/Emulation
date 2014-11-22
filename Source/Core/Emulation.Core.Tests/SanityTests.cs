@@ -4,7 +4,7 @@ namespace Emulation.Core.Tests
 {
     public class SanityTests
     {
-        [Fact]
+        [Fact(DisplayName = "xUnit is working correctly.")]
         public void XunitIsWorking()
         {
             Assert.True(true);
