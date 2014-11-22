@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System;
+using Xunit;
 
 namespace Emulation.Core.Tests
 {
@@ -64,6 +65,32 @@ namespace Emulation.Core.Tests
             {
                 Assert.Equal((byte)(i % 256), memory.ReadByte(i));
             }
+        }
+
+        [Fact(DisplayName = "Reading and writing bytes out of range throws")]
+        public void ReadAndWriteBytesOutOfRange()
+        {
+            var memory = Memory.Create();
+
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                memory.ReadByte(-1);
+            });
+
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                memory.WriteByte(-1, 0);
+            });
+
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                memory.ReadByte(memory.Size);
+            });
+
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                memory.WriteByte(memory.Size, 0);
+            });
         }
     }
 }
