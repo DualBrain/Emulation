@@ -111,6 +111,32 @@ namespace Emulation.Core
             }
         }
 
+        public uint ReadUInt32(int address)
+        {
+            if (address < 0 || address > this.size - 4)
+            {
+                throw new ArgumentOutOfRangeException("address");
+            }
+
+            // We take a faster path if the entire value can be read from the current page
+            if (address >= this.currentPageStart && address < this.nextPageStart - 4)
+            {
+                var page = this.currentPage;
+                var index = address - this.currentPageStart;
+
+                return (uint)((page[index] << 24) | (page[index + 1] << 16) | (page[index + 2] << 8) | page[index + 3]);
+            }
+            else
+            {
+                var b1 = ReadByteCore(address);
+                var b2 = ReadByteCore(address + 1);
+                var b3 = ReadByteCore(address + 2);
+                var b4 = ReadByteCore(address + 3);
+
+                return (uint)((b1 << 24) | (b2 << 16) | (b3 << 8) | b4);
+            }
+        }
+
         public void WriteByte(int address, byte value)
         {
             if (address < 0 || address > this.size - 1)
@@ -144,6 +170,38 @@ namespace Emulation.Core
             {
                 WriteByteCore(address, b1);
                 WriteByteCore(address + 1, b2);
+            }
+        }
+
+        public void WriteUInt32(int address, uint value)
+        {
+            if (address < 0 || address > this.size - 4)
+            {
+                throw new ArgumentOutOfRangeException("address");
+            }
+
+            var b1 = (byte)(value >> 24);
+            var b2 = (byte)(value >> 16);
+            var b3 = (byte)(value >> 8);
+            var b4 = (byte)(value & 0xff);
+
+            // We take a faster path if the entire value can be written to the current page
+            if (address >= this.currentPageStart && address < this.nextPageStart - 4)
+            {
+                var page = this.currentPage;
+                var index = address - this.currentPageStart;
+
+                page[index] = b1;
+                page[index + 1] = b2;
+                page[index + 2] = b3;
+                page[index + 3] = b4;
+            }
+            else
+            {
+                WriteByteCore(address, b1);
+                WriteByteCore(address + 1, b2);
+                WriteByteCore(address + 2, b3);
+                WriteByteCore(address + 3, b4);
             }
         }
 
