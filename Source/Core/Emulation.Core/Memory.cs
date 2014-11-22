@@ -11,6 +11,10 @@ namespace Emulation.Core
 
         private readonly byte[][] pages;
 
+        private byte[] currentPage;
+        private int currentPageStart;
+        private int nextPageStart;
+
         public static Memory Create(int size = 4096, int pageSize = 4096)
         {
             return new Memory(size, pageSize);
@@ -30,41 +34,52 @@ namespace Emulation.Core
             this.pages = new byte[this.pageCount][];
         }
 
-        private void EnsurePage(int page)
+        private void SelectPage(int address)
         {
-            if (this.pages[page] == null)
+            var pageIndex = address / this.pageSize;
+
+            if (this.pages[pageIndex] != null)
             {
-                this.pages[page] = new byte[this.pageSize];
+                this.currentPage = this.pages[pageIndex];
             }
+            else
+            {
+                this.currentPage = new byte[this.pageSize];
+                this.pages[pageIndex] = this.currentPage;
+            }
+
+            this.currentPage = this.pages[pageIndex];
+            this.currentPageStart = pageIndex * this.pageSize;
+            this.nextPageStart = this.currentPageStart + this.pageSize;
         }
 
         private byte ReadByteCore(int address)
         {
             Debug.Assert(address >= 0 && address < this.size);
 
-            var page = address / this.pageSize;
-            var index = address % this.pageSize;
+            if (address < this.currentPageStart || address >= this.nextPageStart)
+            {
+                SelectPage(address);
+            }
 
-            EnsurePage(page);
-
-            return this.pages[page][index];
+            return this.currentPage[address - this.currentPageStart];
         }
 
         private void WriteByteCore(int address, byte value)
         {
             Debug.Assert(address >= 0 && address < this.size);
 
-            var page = address / this.pageSize;
-            var index = address % this.pageSize;
+            if (address < this.currentPageStart || address >= this.nextPageStart)
+            {
+                SelectPage(address);
+            }
 
-            EnsurePage(page);
-
-            this.pages[page][index] = value;
+            this.currentPage[address - this.currentPageStart] = value;
         }
 
         public byte ReadByte(int address)
         {
-            if (address < 0 || address >= this.size)
+            if (address < 0 || address > this.size - 1)
             {
                 throw new ArgumentOutOfRangeException("address");
             }
@@ -74,7 +89,7 @@ namespace Emulation.Core
 
         public void WriteByte(int address, byte value)
         {
-            if (address < 0 || address >= this.size)
+            if (address < 0 || address > this.size - 1)
             {
                 throw new ArgumentOutOfRangeException("address");
             }
