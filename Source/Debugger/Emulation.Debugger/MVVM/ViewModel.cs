@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace Emulation.Debugger.MVVM
 {
-    internal abstract class ViewModel : INotifyPropertyChanged
+    internal abstract partial class ViewModel : INotifyPropertyChanged
     {
         private static Dictionary<string, PropertyChangedEventArgs> eventArgsCache;
         private static object gate = new object();
