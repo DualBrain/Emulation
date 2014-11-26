@@ -9,6 +9,7 @@
     <TargetFrameworkProfile>Profile259</TargetFrameworkProfile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Bytes.cs" />
     <Compile Include="Memory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
