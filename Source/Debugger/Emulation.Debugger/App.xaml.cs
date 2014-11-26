@@ -1,17 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.Composition.Hosting;
 using System.Windows;
+using Emulation.Debugger.ViewModels;
 
 namespace Emulation.Debugger
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
+        private CompositionContainer container;
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            this.container = new CompositionContainer(
+                new AssemblyCatalog(typeof(App).Assembly));
+
+            var mainWindowViewModel = container.GetExportedValue<MainWindowViewModel>();
+
+            this.MainWindow = mainWindowViewModel.CreateView();
+            this.MainWindow.Show();
+        }
+
+        public new static App Current => (App)Application.Current;
     }
 }
