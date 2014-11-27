@@ -4,7 +4,7 @@ namespace Emulation_6502
 {
     public class Processor
     {
-        private readonly Memory memory;
+        private readonly Memory ram;
 
         // registers
         private ushort pc;
@@ -16,10 +16,10 @@ namespace Emulation_6502
 
         public Processor()
         {
-            this.memory = Memory.Create(64 * 1024);
+            this.ram = Memory.CreateEmpty(64 * 1024);
         }
 
-        public Memory Memory => this.memory;
+        public Memory Ram => this.ram;
 
         public ushort PC => this.pc;
         public byte SP => this.sp;

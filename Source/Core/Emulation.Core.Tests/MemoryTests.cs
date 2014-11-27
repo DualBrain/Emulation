@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Xunit;
 
 namespace Emulation.Core.Tests
@@ -31,21 +32,21 @@ namespace Emulation.Core.Tests
         [Fact(DisplayName = "Default page size is 4096")]
         public void DefaultPageSize()
         {
-            var memory = Memory.Create();
+            var memory = Memory.CreateEmpty();
             Assert.Equal(4096, memory.PageSize);
         }
 
         [Fact(DisplayName = "Default size is 4096")]
         public void DefaultSize()
         {
-            var memory = Memory.Create();
+            var memory = Memory.CreateEmpty();
             Assert.Equal(4096, memory.Size);
         }
 
         [Fact(DisplayName = "Write and read bytes into default memory using indexer")]
         public void WriteAndReadBytes_Indexer()
         {
-            var memory = Memory.Create();
+            var memory = Memory.CreateEmpty();
 
             for (int i = 0; i < memory.Size; i++)
             {
@@ -61,7 +62,7 @@ namespace Emulation.Core.Tests
         [Fact(DisplayName = "Write and read bytes into 64k memory using indexer")]
         public void WriteAndReadBytes_64k_Indexer()
         {
-            var memory = Memory.Create(size: 64 * 1024);
+            var memory = Memory.CreateEmpty(size: 64 * 1024);
 
             for (int i = 0; i < memory.Size; i++)
             {
@@ -77,7 +78,7 @@ namespace Emulation.Core.Tests
         [Fact(DisplayName = "Write and read bytes into 64k memory")]
         public void WriteAndReadBytes_64k()
         {
-            var memory = Memory.Create(size: 64 * 1024);
+            var memory = Memory.CreateEmpty(size: 64 * 1024);
 
             for (int i = 0; i < memory.Size; i++)
             {
@@ -93,7 +94,7 @@ namespace Emulation.Core.Tests
         [Fact(DisplayName = "Reading and writing bytes out of range throws")]
         public void ReadAndWriteBytesOutOfRange()
         {
-            var memory = Memory.Create();
+            var memory = Memory.CreateEmpty();
 
             Assert.Throws<ArgumentOutOfRangeException>(() => memory.ReadByte(-1));
             Assert.Throws<ArgumentOutOfRangeException>(() => memory.WriteByte(-1, 0));
@@ -104,7 +105,7 @@ namespace Emulation.Core.Tests
         [Fact(DisplayName = "Write and read ushorts into 64k memory")]
         public void WriteAndReadUInt16s_64k()
         {
-            var memory = Memory.Create(size: 64 * 1024);
+            var memory = Memory.CreateEmpty(size: 64 * 1024);
 
             for (int i = 0; i < memory.Size; i += 2)
             {
@@ -120,7 +121,7 @@ namespace Emulation.Core.Tests
         [Fact(DisplayName = "Write and read ushorts into 64k memory starting at address 1")]
         public void WriteAndReadUInt16s_64k_Offset()
         {
-            var memory = Memory.Create(size: 64 * 1024);
+            var memory = Memory.CreateEmpty(size: 64 * 1024);
 
             for (int i = 1; i < memory.Size - 1; i += 2)
             {
@@ -136,7 +137,7 @@ namespace Emulation.Core.Tests
         [Fact(DisplayName = "Reading and writing ushorts out of range throws")]
         public void ReadAndWriteUInt16sOutOfRange()
         {
-            var memory = Memory.Create();
+            var memory = Memory.CreateEmpty();
 
             Assert.Throws<ArgumentOutOfRangeException>(() => memory.ReadUInt16(-1));
             Assert.Throws<ArgumentOutOfRangeException>(() => memory.WriteUInt16(-1, 0));
@@ -149,7 +150,7 @@ namespace Emulation.Core.Tests
         [Fact(DisplayName = "Write and read uints into 64k memory")]
         public void WriteAndReadUInt32s_64k()
         {
-            var memory = Memory.Create(size: 64 * 1024);
+            var memory = Memory.CreateEmpty(size: 64 * 1024);
 
             for (int i = 0; i < memory.Size; i += 4)
             {
@@ -165,7 +166,7 @@ namespace Emulation.Core.Tests
         [Fact(DisplayName = "Write and read uints into 64k memory starting at address 1")]
         public void WriteAndReadUInt32s_64k_Offset1()
         {
-            var memory = Memory.Create(size: 64 * 1024);
+            var memory = Memory.CreateEmpty(size: 64 * 1024);
 
             for (int i = 1; i < memory.Size - 3; i += 4)
             {
@@ -181,7 +182,7 @@ namespace Emulation.Core.Tests
         [Fact(DisplayName = "Write and read uints into 64k memory starting at address 2")]
         public void WriteAndReadUInt32s_64k_Offset2()
         {
-            var memory = Memory.Create(size: 64 * 1024);
+            var memory = Memory.CreateEmpty(size: 64 * 1024);
 
             for (int i = 2; i < memory.Size - 2; i += 4)
             {
@@ -197,7 +198,7 @@ namespace Emulation.Core.Tests
         [Fact(DisplayName = "Write and read uints into 64k memory starting at address 3")]
         public void WriteAndReadUInt32s_64k_Offset3()
         {
-            var memory = Memory.Create(size: 64 * 1024);
+            var memory = Memory.CreateEmpty(size: 64 * 1024);
 
             for (int i = 3; i < memory.Size - 1; i += 4)
             {
@@ -213,7 +214,7 @@ namespace Emulation.Core.Tests
         [Fact(DisplayName = "Reading and writing uints out of range throws")]
         public void ReadAndWriteUInt32sOutOfRange()
         {
-            var memory = Memory.Create();
+            var memory = Memory.CreateEmpty();
 
             Assert.Throws<ArgumentOutOfRangeException>(() => memory.ReadUInt32(-1));
             Assert.Throws<ArgumentOutOfRangeException>(() => memory.WriteUInt32(-1, 0));
@@ -225,6 +226,30 @@ namespace Emulation.Core.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => memory.WriteUInt32(memory.Size - 1, 0));
             Assert.Throws<ArgumentOutOfRangeException>(() => memory.WriteUInt32(memory.Size - 2, 0));
             Assert.Throws<ArgumentOutOfRangeException>(() => memory.WriteUInt32(memory.Size - 3, 0));
+        }
+
+        [Fact(DisplayName = "Create memory from stream")]
+        public void CreateFromStream()
+        {
+            const int length = (64 * 1024) + 42;
+
+            using (var stream = new MemoryStream(length))
+            {
+                for (int i = 0; i < length; i++)
+                {
+                    stream.WriteByte(IndexToByte(i));
+                }
+
+                stream.Seek(0, SeekOrigin.Begin);
+
+                var memory = Memory.CreateFromStream(stream);
+                Assert.Equal(length, memory.Size);
+
+                for (int i = 0; i < length; i++)
+                {
+                    Assert.Equal(IndexToByte(i), memory.ReadByte(i));
+                }
+            }
         }
     }
 }
