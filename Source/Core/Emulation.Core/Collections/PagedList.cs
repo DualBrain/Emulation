@@ -28,25 +28,30 @@ namespace Emulation.Core.Collections
             EnsureCapacity(capacity);
         }
 
-        public int Capacity =>
-           this.pages != null
-               ? this.pages.Length * this.pageSize
-               : 0;
+        public int Capacity
+        {
+            get
+            {
+                return this.pages != null
+                   ? this.pages.Length * this.pageSize
+                   : 0;
+            }
+        }
 
         public int Count => this.count;
         public int PageSize => this.pageSize;
 
         bool ICollection<T>.IsReadOnly => false;
 
-        private void EnsureCapacity(int needed)
+        public void EnsureCapacity(int value)
         {
-            if (this.Capacity >= needed)
+            if (this.Capacity >= value)
             {
                 return;
             }
 
-            var pageCount = needed / this.pageSize;
-            if (needed % this.pageSize > 0)
+            var pageCount = value / this.pageSize;
+            if (value % this.pageSize > 0)
             {
                 pageCount++;
             }

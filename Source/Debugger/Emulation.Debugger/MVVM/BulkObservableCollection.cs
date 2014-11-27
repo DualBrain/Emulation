@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using Emulation.Core.Collections;
 
 namespace Emulation.Debugger.MVVM
 {
-    public partial class BulkObservableCollection<T> : Collection<T>, INotifyCollectionChanged, INotifyPropertyChanged
+    public partial class BulkObservableCollection<T> : PagedCollection<T>, INotifyCollectionChanged, INotifyPropertyChanged
     {
         private int bulkOperationCount;
         private bool changedDuringBulkOperation;
+
+        public BulkObservableCollection(int capacity = 0, int pageSize = PagedList<T>.DefaultPageSize)
+            : base(capacity, pageSize)
+        {
+        }
 
         protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
@@ -322,6 +327,14 @@ namespace Emulation.Debugger.MVVM
             finally
             {
                 EndBulkOperation();
+            }
+        }
+
+        public void EnsureCapacity(int value)
+        {
+            if (value > Count)
+            {
+                this.Items.EnsureCapacity(value);
             }
         }
 

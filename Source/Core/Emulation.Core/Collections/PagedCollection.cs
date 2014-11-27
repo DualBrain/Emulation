@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Emulation.Core.Collections
 {
-    public class PagedCollection<T> : ICollection<T>, IReadOnlyCollection<T>
+    public class PagedCollection<T> : IList<T>, IReadOnlyList<T>
     {
         private readonly PagedList<T> items;
 

@@ -22,7 +22,7 @@ namespace Emulation.Debugger.ViewModels
             this.fileService.FileOpened += FileOpened;
             this.fileService.FileClosed += FileClosed;
 
-            this.lines = new BulkObservableCollection<MemoryLineViewModel>();
+            this.lines = new BulkObservableCollection<MemoryLineViewModel>(pageSize: 4096);
             this.readOnlyLines = lines.AsReadOnly();
         }
 
@@ -34,6 +34,8 @@ namespace Emulation.Debugger.ViewModels
             this.lines.BeginBulkOperation();
             try
             {
+                this.lines.EnsureCapacity((size / 8) + 1);
+
                 for (int i = 0; i < size; i += 8)
                 {
                     this.lines.Add(new MemoryLineViewModel(memory, i));
