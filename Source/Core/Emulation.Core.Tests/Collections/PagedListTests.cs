@@ -42,6 +42,29 @@ namespace Emulation.Core.Tests.Collections
             Assert.Equal(0, list.Count);
         }
 
+        [Fact(DisplayName = "add 4k items and enumerate")]
+        public void AddItemsAndEnumerate()
+        {
+            const int length = 4 * 1024;
+
+            var list = new PagedList<int>();
+
+            for (int i = 0; i < length; i++)
+            {
+                list.Add(i);
+            }
+
+            Assert.Equal(length, list.Count);
+
+            int expected = 0;
+
+            foreach (var item in list)
+            {
+                Assert.Equal(expected, item);
+                expected++;
+            }
+        }
+
         [Fact(DisplayName = "add 64k items with page size of 37")]
         public void AddItemsAndClear_PageSize37()
         {
