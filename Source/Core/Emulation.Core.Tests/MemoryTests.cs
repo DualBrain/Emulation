@@ -6,29 +6,6 @@ namespace Emulation.Core.Tests
 {
     public class MemoryTests
     {
-        private static byte IndexToByte(int i)
-        {
-            return (byte)(i % 256);
-        }
-
-        private static ushort IndexToUInt16(int i)
-        {
-            var b1 = IndexToByte(i);
-            var b2 = IndexToByte(i + 1);
-
-            return (ushort)((b1 << 8) | b2);
-        }
-
-        private static uint IndexToUInt32(int i)
-        {
-            var b1 = IndexToByte(i);
-            var b2 = IndexToByte(i + 1);
-            var b3 = IndexToByte(i + 2);
-            var b4 = IndexToByte(i + 3);
-
-            return (uint)((b1 << 24) | (b2 << 16) | (b3 << 8) | b4);
-        }
-
         [Fact(DisplayName = "Default page size is 4096")]
         public void DefaultPageSize()
         {
@@ -50,12 +27,12 @@ namespace Emulation.Core.Tests
 
             for (int i = 0; i < memory.Size; i++)
             {
-                memory[i] = IndexToByte(i);
+                memory[i] = Helpers.IndexToByte(i);
             }
 
             for (int i = 0; i < memory.Size; i++)
             {
-                Assert.Equal(IndexToByte(i), memory[i]);
+                Assert.Equal(Helpers.IndexToByte(i), memory[i]);
             }
         }
 
@@ -66,12 +43,12 @@ namespace Emulation.Core.Tests
 
             for (int i = 0; i < memory.Size; i++)
             {
-                memory[i] = IndexToByte(i);
+                memory[i] = Helpers.IndexToByte(i);
             }
 
             for (int i = 0; i < memory.Size; i++)
             {
-                Assert.Equal(IndexToByte(i), memory[i]);
+                Assert.Equal(Helpers.IndexToByte(i), memory[i]);
             }
         }
 
@@ -82,12 +59,12 @@ namespace Emulation.Core.Tests
 
             for (int i = 0; i < memory.Size; i++)
             {
-                memory.WriteByte(i, IndexToByte(i));
+                memory.WriteByte(i, Helpers.IndexToByte(i));
             }
 
             for (int i = 0; i < memory.Size; i++)
             {
-                Assert.Equal(IndexToByte(i), memory.ReadByte(i));
+                Assert.Equal(Helpers.IndexToByte(i), memory.ReadByte(i));
             }
         }
 
@@ -109,12 +86,12 @@ namespace Emulation.Core.Tests
 
             for (int i = 0; i < memory.Size; i += 2)
             {
-                memory.WriteUInt16(i, IndexToUInt16(i));
+                memory.WriteUInt16(i, Helpers.IndexToUInt16(i));
             }
 
             for (int i = 0; i < memory.Size; i += 2)
             {
-                Assert.Equal(IndexToUInt16(i), memory.ReadUInt16(i));
+                Assert.Equal(Helpers.IndexToUInt16(i), memory.ReadUInt16(i));
             }
         }
 
@@ -125,12 +102,12 @@ namespace Emulation.Core.Tests
 
             for (int i = 1; i < memory.Size - 1; i += 2)
             {
-                memory.WriteUInt16(i, IndexToUInt16(i));
+                memory.WriteUInt16(i, Helpers.IndexToUInt16(i));
             }
 
             for (int i = 1; i < memory.Size - 1; i += 2)
             {
-                Assert.Equal(IndexToUInt16(i), memory.ReadUInt16(i));
+                Assert.Equal(Helpers.IndexToUInt16(i), memory.ReadUInt16(i));
             }
         }
 
@@ -154,12 +131,12 @@ namespace Emulation.Core.Tests
 
             for (int i = 0; i < memory.Size; i += 4)
             {
-                memory.WriteUInt32(i, IndexToUInt32(i));
+                memory.WriteUInt32(i, Helpers.IndexToUInt32(i));
             }
 
             for (int i = 0; i < memory.Size; i += 4)
             {
-                Assert.Equal(IndexToUInt32(i), memory.ReadUInt32(i));
+                Assert.Equal(Helpers.IndexToUInt32(i), memory.ReadUInt32(i));
             }
         }
 
@@ -170,12 +147,12 @@ namespace Emulation.Core.Tests
 
             for (int i = 1; i < memory.Size - 3; i += 4)
             {
-                memory.WriteUInt32(i, IndexToUInt32(i));
+                memory.WriteUInt32(i, Helpers.IndexToUInt32(i));
             }
 
             for (int i = 1; i < memory.Size - 3; i += 4)
             {
-                Assert.Equal(IndexToUInt32(i), memory.ReadUInt32(i));
+                Assert.Equal(Helpers.IndexToUInt32(i), memory.ReadUInt32(i));
             }
         }
 
@@ -186,12 +163,12 @@ namespace Emulation.Core.Tests
 
             for (int i = 2; i < memory.Size - 2; i += 4)
             {
-                memory.WriteUInt32(i, IndexToUInt32(i));
+                memory.WriteUInt32(i, Helpers.IndexToUInt32(i));
             }
 
             for (int i = 2; i < memory.Size - 2; i += 4)
             {
-                Assert.Equal(IndexToUInt32(i), memory.ReadUInt32(i));
+                Assert.Equal(Helpers.IndexToUInt32(i), memory.ReadUInt32(i));
             }
         }
 
@@ -202,12 +179,12 @@ namespace Emulation.Core.Tests
 
             for (int i = 3; i < memory.Size - 1; i += 4)
             {
-                memory.WriteUInt32(i, IndexToUInt32(i));
+                memory.WriteUInt32(i, Helpers.IndexToUInt32(i));
             }
 
             for (int i = 3; i < memory.Size - 1; i += 4)
             {
-                Assert.Equal(IndexToUInt32(i), memory.ReadUInt32(i));
+                Assert.Equal(Helpers.IndexToUInt32(i), memory.ReadUInt32(i));
             }
         }
 
@@ -237,7 +214,7 @@ namespace Emulation.Core.Tests
             {
                 for (int i = 0; i < length; i++)
                 {
-                    stream.WriteByte(IndexToByte(i));
+                    stream.WriteByte(Helpers.IndexToByte(i));
                 }
 
                 stream.Seek(0, SeekOrigin.Begin);
@@ -247,7 +224,7 @@ namespace Emulation.Core.Tests
 
                 for (int i = 0; i < length; i++)
                 {
-                    Assert.Equal(IndexToByte(i), memory.ReadByte(i));
+                    Assert.Equal(Helpers.IndexToByte(i), memory.ReadByte(i));
                 }
             }
         }
