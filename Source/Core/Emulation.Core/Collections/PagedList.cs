@@ -4,8 +4,10 @@ using System.Diagnostics;
 
 namespace Emulation.Core.Collections
 {
-    public partial class PagedList<T> : IList<T>
+    public partial class PagedList<T> : IList<T>, IReadOnlyList<T>
     {
+        public const int DefaultPageSize = 16;
+
         private int count;
         private T[][] pages;
         private readonly int pageSize;
@@ -14,7 +16,7 @@ namespace Emulation.Core.Collections
         private T[] currentPage;
         private int currentPageIndex = -1;
 
-        public PagedList(int capacity = 0, int pageSize = 16)
+        public PagedList(int capacity = 0, int pageSize = DefaultPageSize)
         {
             if (capacity < 0)
             {
@@ -25,6 +27,16 @@ namespace Emulation.Core.Collections
 
             EnsureCapacity(capacity);
         }
+
+        public int Capacity =>
+           this.pages != null
+               ? this.pages.Length * this.pageSize
+               : 0;
+
+        public int Count => this.count;
+        public int PageSize => this.pageSize;
+
+        bool ICollection<T>.IsReadOnly => false;
 
         private void EnsureCapacity(int needed)
         {
@@ -143,16 +155,6 @@ namespace Emulation.Core.Collections
                 }
             }
         }
-
-        public int Capacity =>
-            this.pages != null
-                ? this.pages.Length * this.pageSize
-                : 0;
-
-        public int Count => this.count;
-        public int PageSize => this.pageSize;
-
-        public bool IsReadOnly => false;
 
         public void Add(T item)
         {

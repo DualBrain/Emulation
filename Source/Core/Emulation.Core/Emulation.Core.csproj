@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Bytes.cs" />
+    <Compile Include="Collections\PagedCollection.cs" />
     <Compile Include="Collections\PagedList.cs" />
     <Compile Include="Collections\PagedList.Enumerator.cs" />
     <Compile Include="Memory.cs" />
