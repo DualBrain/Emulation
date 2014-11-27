@@ -30,6 +30,12 @@
     </ApplicationDefinition>
     <Compile Include="Controls\AutoDisableImage.cs" />
     <Compile Include="MVVM\ViewModel_CommandBinding.cs" />
+    <Compile Include="Services\FileClosedEventArgs.cs" />
+    <Compile Include="Services\FileClosingEventArgs.cs" />
+    <Compile Include="Services\FileEventArgs.cs" />
+    <Compile Include="Services\FileOpenedEventArgs.cs" />
+    <Compile Include="Services\FileOpeningEventArgs.cs" />
+    <Compile Include="Services\FileService.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="MVVM\ViewModel.cs" />
     <Compile Include="MVVM\ViewModel`1.cs" />
