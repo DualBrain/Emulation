@@ -14,12 +14,7 @@ namespace Emulation.Core.Collections
         private T[] currentPage;
         private int currentPageIndex = -1;
 
-        public PagedList(int pageSize = 16)
-        {
-            this.pageSize = 16;
-        }
-
-        public PagedList(int capacity, int pageSize = 16)
+        public PagedList(int capacity = 0, int pageSize = 16)
         {
             if (capacity < 0)
             {

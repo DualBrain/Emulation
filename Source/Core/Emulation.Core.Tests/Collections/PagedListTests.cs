@@ -42,6 +42,54 @@ namespace Emulation.Core.Tests.Collections
             Assert.Equal(0, list.Count);
         }
 
+        [Fact(DisplayName = "add 64k items and clear with page size of 37")]
+        public void AddItemsAndClear_PageSize37()
+        {
+            const int length = 64 * 1024;
+
+            var list = new PagedList<int>(pageSize: 37);
+
+            for (int i = 0; i < length; i++)
+            {
+                list.Add(i);
+            }
+
+            Assert.Equal(length, list.Count);
+
+            for (int i = 0; i < length; i++)
+            {
+                Assert.Equal(i, list[i]);
+            }
+
+            list.Clear();
+
+            Assert.Equal(0, list.Count);
+        }
+
+        [Fact(DisplayName = "add 64k items and clear with page size of 4096")]
+        public void AddItemsAndClear_PageSize4096()
+        {
+            const int length = 64 * 1024;
+
+            var list = new PagedList<int>(pageSize: 4096);
+
+            for (int i = 0; i < length; i++)
+            {
+                list.Add(i);
+            }
+
+            Assert.Equal(length, list.Count);
+
+            for (int i = 0; i < length; i++)
+            {
+                Assert.Equal(i, list[i]);
+            }
+
+            list.Clear();
+
+            Assert.Equal(0, list.Count);
+        }
+
         [Fact(DisplayName = "insert 4k items at front and clear")]
         public void InsertItemsAndClear()
         {
