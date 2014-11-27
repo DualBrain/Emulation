@@ -34,18 +34,18 @@ namespace Emulation.Debugger.ViewModels
 
         protected override void OnViewCreated(Window view)
         {
-            var memory = view.FindName<Grid>("Memory");
-            memory.Children.Add(memoryViewModel.CreateView());
+            var memory = view.FindName<Border>("Memory");
+            memory.Child = memoryViewModel.CreateView();
         }
 
         private void FileClosed(object sender, FileClosedEventArgs e)
         {
-            PropertyChanged("Title");
+            PropertyChanged(nameof(Title));
         }
 
         private void FileOpened(object sender, FileOpenedEventArgs e)
         {
-            PropertyChanged("Title");
+            PropertyChanged(nameof(Title));
         }
 
         private bool CanExitCommandExecute()

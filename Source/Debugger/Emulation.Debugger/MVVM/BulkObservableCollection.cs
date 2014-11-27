@@ -44,7 +44,7 @@ namespace Emulation.Debugger.MVVM
 
         private void OnCountChanged()
         {
-            OnPropertyChanged("Count");
+            OnPropertyChanged(nameof(Count));
             OnItemsChanged();
         }
 

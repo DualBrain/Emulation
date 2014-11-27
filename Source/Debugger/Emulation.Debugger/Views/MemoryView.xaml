@@ -7,81 +7,99 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d">
     <Grid>
-        <ItemsControl FontFamily="Consolas"
+        
+        <Grid.Style>
+            <Style TargetType="Grid">
+                <Setter Property="Visibility" Value="Collapsed"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding HasData}" Value="True">
+                        <Setter Property="Visibility" Value="Visible"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
+        
+        <Border BorderBrush="Silver"
+                BorderThickness="1"
+                Padding="1">
+            
+            <ItemsControl FontFamily="Consolas"
                       FontSize="12"
                       ItemsSource="{Binding Lines}"
                       VirtualizingStackPanel.IsVirtualizing="True"
                       VirtualizingStackPanel.VirtualizationMode="Recycling"
                       ScrollViewer.CanContentScroll="True">
 
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
 
-                        <Border BorderThickness="0,0,1,0"
+                            <Border BorderThickness="0,0,1,0"
                                 BorderBrush="Silver">
 
-                            <TextBlock Margin="0,0,8,0"
+                                <TextBlock Margin="0,0,8,0"
                                        Text="{Binding Address, StringFormat=\{0:x4\}}"/>
 
-                        </Border>
+                            </Border>
 
-                        <TextBlock Margin="8,0,0,0"
+                            <TextBlock Margin="8,0,0,0"
                                    Foreground="Navy"
                                    Text="{Binding Byte1, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
 
-                        <TextBlock Margin="8,0,0,0"
+                            <TextBlock Margin="8,0,0,0"
                                    Foreground="Navy"
                                    Text="{Binding Byte2, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
 
-                        <TextBlock Margin="8,0,0,0"
+                            <TextBlock Margin="8,0,0,0"
                                    Foreground="Navy"
                                    Text="{Binding Byte3, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
 
-                        <TextBlock Margin="8,0,0,0"
+                            <TextBlock Margin="8,0,0,0"
                                    Foreground="Navy"
                                    Text="{Binding Byte4, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
 
-                        <TextBlock Margin="8,0,0,0"
+                            <TextBlock Margin="8,0,0,0"
                                    Foreground="Navy"
                                    Text="{Binding Byte5, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
 
-                        <TextBlock Margin="8,0,0,0"
+                            <TextBlock Margin="8,0,0,0"
                                    Foreground="Navy"
                                    Text="{Binding Byte6, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
 
-                        <TextBlock Margin="8,0,0,0"
+                            <TextBlock Margin="8,0,0,0"
                                    Foreground="Navy"
                                    Text="{Binding Byte7, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
 
-                        <TextBlock Margin="8,0,0,0"
+                            <TextBlock Margin="8,0,8,0"
                                    Foreground="Navy"
                                    Text="{Binding Byte8, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
 
-                    </StackPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
 
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
 
-            <ItemsControl.Template>
-                <ControlTemplate>
-                    <Border BorderThickness="{TemplateBinding Border.BorderThickness}"
+                <ItemsControl.Template>
+                    <ControlTemplate>
+                        <Border BorderThickness="{TemplateBinding Border.BorderThickness}"
                             Padding="{TemplateBinding Control.Padding}"
                             BorderBrush="{TemplateBinding Border.BorderBrush}"
                             Background="{TemplateBinding Panel.Background}"
                             SnapsToDevicePixels="True">
-                        <ScrollViewer Padding="8,2,2,2"
+                            <ScrollViewer Padding="8,2,2,2"
                                       Focusable="False">
-                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
-                        </ScrollViewer>
-                    </Border>
-                </ControlTemplate>
-            </ItemsControl.Template>
-        </ItemsControl>
+                                <ItemsPresenter SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                            </ScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </ItemsControl.Template>
+            </ItemsControl>
+            
+        </Border>
     </Grid>
 </UserControl>

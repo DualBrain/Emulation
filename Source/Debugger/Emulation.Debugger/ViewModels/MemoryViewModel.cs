@@ -43,12 +43,18 @@ namespace Emulation.Debugger.ViewModels
             {
                 this.lines.EndBulkOperation();
             }
+
+            PropertyChanged(nameof(HasData));
         }
 
         private void FileClosed(object sender, FileClosedEventArgs e)
         {
             this.lines.Clear();
+
+            PropertyChanged(nameof(HasData));
         }
+
+        public bool HasData => this.lines.Count > 0;
 
         public ReadOnlyBulkObservableCollection<MemoryLineViewModel> Lines => readOnlyLines;
     }
