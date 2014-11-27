@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel.Composition;
+using System.IO;
+using Emulation.Core;
 
 namespace Emulation.Debugger.Services
 {
@@ -7,10 +9,13 @@ namespace Emulation.Debugger.Services
     internal class FileService
     {
         private string filePath;
+        private Memory memory;
 
         public string FilePath => this.filePath;
 
         public bool IsFileOpen => this.filePath != null;
+
+        public Memory Memory => this.memory;
 
         public void CloseFile()
         {
@@ -19,6 +24,7 @@ namespace Emulation.Debugger.Services
             FileClosing?.Invoke(this, new FileClosingEventArgs(localFilePath));
 
             this.filePath = null;
+            this.memory = null;
 
             FileClosed?.Invoke(this, new FileClosedEventArgs(localFilePath));
         }
@@ -33,6 +39,11 @@ namespace Emulation.Debugger.Services
             FileOpening?.Invoke(this, new FileOpeningEventArgs(filePath));
 
             this.filePath = filePath;
+
+            using (var stream = File.OpenRead(filePath))
+            {
+                this.memory = Memory.CreateFromStream(stream);
+            }
 
             FileOpened?.Invoke(this, new FileOpenedEventArgs(filePath));
         }

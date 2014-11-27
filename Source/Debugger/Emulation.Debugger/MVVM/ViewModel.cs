@@ -6,30 +6,6 @@ namespace Emulation.Debugger.MVVM
 {
     internal abstract partial class ViewModel : INotifyPropertyChanged
     {
-        private static Dictionary<string, PropertyChangedEventArgs> eventArgsCache;
-        private static object gate = new object();
-
-        private static PropertyChangedEventArgs GetEventArgs(string propertyName)
-        {
-            PropertyChangedEventArgs result;
-
-            lock (gate)
-            {
-                if (eventArgsCache == null)
-                {
-                    eventArgsCache = new Dictionary<string, PropertyChangedEventArgs>();
-                }
-
-                if (!eventArgsCache.TryGetValue(propertyName, out result))
-                {
-                    result = new PropertyChangedEventArgs(propertyName);
-                    eventArgsCache.Add(propertyName, result);
-                }
-            }
-
-            return result;
-        }
-
         private PropertyChangedEventHandler propertyChangedHandler;
 
         protected void PropertyChanged(string propertyName)
@@ -37,7 +13,7 @@ namespace Emulation.Debugger.MVVM
             var handler = propertyChangedHandler;
             if (handler != null)
             {
-                handler(this, GetEventArgs(propertyName));
+                handler(this, PropertyChangedEventArgsCache.GetOrCreate(propertyName));
             }
         }
 

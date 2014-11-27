@@ -11,6 +11,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
+    <Reference Include="System.IO" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -28,7 +29,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MVVM\BulkObservableCollection.cs" />
     <Compile Include="Controls\AutoDisableImage.cs" />
+    <Compile Include="Extensions\FrameworkElementExtensions.cs" />
+    <Compile Include="MVVM\BulkObservableCollection.FuncComparer.cs" />
+    <Compile Include="MVVM\PropertyChangedEventArgsCache.cs" />
+    <Compile Include="MVVM\ReadOnlyBulkObservableCollection.cs" />
     <Compile Include="MVVM\ViewModel_CommandBinding.cs" />
     <Compile Include="Services\FileClosedEventArgs.cs" />
     <Compile Include="Services\FileClosingEventArgs.cs" />
@@ -43,6 +49,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModels\MemoryLineViewModel.cs" />
+    <Compile Include="ViewModels\MemoryViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -87,6 +95,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainWindowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MemoryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.Composition;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using Emulation.Debugger.Extensions;
 using Emulation.Debugger.MVVM;
 using Emulation.Debugger.Services;
 using Microsoft.Win32;
@@ -12,15 +14,38 @@ namespace Emulation.Debugger.ViewModels
     internal class MainWindowViewModel : ViewModel<Window>
     {
         private readonly FileService fileService;
+        private readonly MemoryViewModel memoryViewModel;
 
         [ImportingConstructor]
-        private MainWindowViewModel(FileService fileService)
+        private MainWindowViewModel(
+            FileService fileService,
+            MemoryViewModel memoryViewModel)
             : base("MainWindowView")
         {
             this.fileService = fileService;
+            this.memoryViewModel = memoryViewModel;
+
+            this.fileService.FileClosed += FileClosed;
+            this.fileService.FileOpened += FileOpened;
 
             this.ExitCommand = RegisterCommand("Exit", "Exit", ExitCommandExecuted, CanExitCommandExecute);
             this.OpenFileCommand = RegisterCommand("Open File", "OpenFile", OpenFileCommandExecuted, CanOpenFileCommandExecute, new KeyGesture(Key.O, ModifierKeys.Control));
+        }
+
+        protected override void OnViewCreated(Window view)
+        {
+            var memory = view.FindName<Grid>("Memory");
+            memory.Children.Add(memoryViewModel.CreateView());
+        }
+
+        private void FileClosed(object sender, FileClosedEventArgs e)
+        {
+            PropertyChanged("Title");
+        }
+
+        private void FileOpened(object sender, FileOpenedEventArgs e)
+        {
+            PropertyChanged("Title");
         }
 
         private bool CanExitCommandExecute()
@@ -48,7 +73,6 @@ namespace Emulation.Debugger.ViewModels
             if (dialog.ShowDialog(this.View) == true)
             {
                 this.fileService.OpenFile(dialog.FileName);
-                PropertyChanged("Title");
             }
         }
 

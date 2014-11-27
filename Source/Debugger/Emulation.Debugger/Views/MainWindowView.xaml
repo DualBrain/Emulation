@@ -49,6 +49,10 @@
             </ToolBar>
         </ToolBarTray>
 
+        <Grid Name="Memory" Grid.Row="2">
+
+        </Grid>
+
         <StatusBar Grid.Row="3">
 
         </StatusBar>

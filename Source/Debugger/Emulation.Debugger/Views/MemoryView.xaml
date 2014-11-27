@@ -1,0 +1,87 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mvvm="clr-namespace:Emulation.Debugger.MVVM"
+             xmlns:vm="clr-namespace:Emulation.Debugger.ViewModels"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d">
+    <Grid>
+        <ItemsControl FontFamily="Consolas"
+                      FontSize="12"
+                      ItemsSource="{Binding Lines}"
+                      VirtualizingStackPanel.IsVirtualizing="True"
+                      VirtualizingStackPanel.VirtualizationMode="Recycling"
+                      ScrollViewer.CanContentScroll="True">
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+
+                        <Border BorderThickness="0,0,1,0"
+                                BorderBrush="Silver">
+
+                            <TextBlock Margin="0,0,8,0"
+                                       Text="{Binding Address, StringFormat=\{0:x4\}}"/>
+
+                        </Border>
+
+                        <TextBlock Margin="8,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Byte1, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
+
+                        <TextBlock Margin="8,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Byte2, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
+
+                        <TextBlock Margin="8,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Byte3, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
+
+                        <TextBlock Margin="8,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Byte4, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
+
+                        <TextBlock Margin="8,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Byte5, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
+
+                        <TextBlock Margin="8,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Byte6, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
+
+                        <TextBlock Margin="8,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Byte7, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
+
+                        <TextBlock Margin="8,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Byte8, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
+
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.Template>
+                <ControlTemplate>
+                    <Border BorderThickness="{TemplateBinding Border.BorderThickness}"
+                            Padding="{TemplateBinding Control.Padding}"
+                            BorderBrush="{TemplateBinding Border.BorderBrush}"
+                            Background="{TemplateBinding Panel.Background}"
+                            SnapsToDevicePixels="True">
+                        <ScrollViewer Padding="8,2,2,2"
+                                      Focusable="False">
+                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </ItemsControl.Template>
+        </ItemsControl>
+    </Grid>
+</UserControl>
