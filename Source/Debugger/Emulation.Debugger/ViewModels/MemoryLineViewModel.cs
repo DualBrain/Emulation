@@ -1,4 +1,5 @@
-﻿using Emulation.Core;
+﻿using System;
+using Emulation.Core;
 using Emulation.Debugger.MVVM;
 
 namespace Emulation.Debugger.ViewModels
@@ -7,11 +8,13 @@ namespace Emulation.Debugger.ViewModels
     {
         private readonly Memory memory;
         private readonly int address;
+        private readonly int hexWidth;
 
-        public MemoryLineViewModel(Memory memory, int address)
+        public MemoryLineViewModel(Memory memory, int address, int hexWidth)
         {
             this.memory = memory;
             this.address = address;
+            this.hexWidth = hexWidth;
         }
 
         private byte? GetValue(int address) =>
@@ -20,6 +23,7 @@ namespace Emulation.Debugger.ViewModels
                 : (byte?)null;
 
         public int Address => this.address;
+        public string AddressText => address.ToString("x" + this.hexWidth.ToString());
 
         public byte? Byte1 => GetValue(this.address);
         public byte? Byte2 => GetValue(this.address + 1);

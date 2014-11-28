@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.Composition;
+﻿using System;
+using System.ComponentModel.Composition;
 using System.Windows.Controls;
 using Emulation.Debugger.MVVM;
 using Emulation.Debugger.Services;
@@ -30,15 +31,16 @@ namespace Emulation.Debugger.ViewModels
         {
             var memory = this.fileService.Memory;
             var size = memory.Size;
+            var hexWidth = (int)Math.Log10(memory.Size);
 
             this.lines.BeginBulkOperation();
             try
             {
                 this.lines.EnsureCapacity((size / 8) + 1);
 
-                for (int i = 0; i < size; i += 8)
+                for (int address = 0; address < size; address += 8)
                 {
-                    this.lines.Add(new MemoryLineViewModel(memory, i));
+                    this.lines.Add(new MemoryLineViewModel(memory, address, hexWidth));
                 }
             }
             finally
