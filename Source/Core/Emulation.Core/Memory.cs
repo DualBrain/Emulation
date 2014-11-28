@@ -300,6 +300,50 @@ namespace Emulation.Core
             }
         }
 
+        /// <summary>
+        /// Write bytes from the specified <paramref name="buffer"/> into memory at the
+        /// specified <paramref name="address"/>. The number of bytes to be written is
+        /// specified by <paramref name="length"/>.
+        /// </summary>
+        /// <param name="buffer">The byte array to copy bytes from.</param>
+        /// <param name="index">The index into <paramref name="buffer"/> to use.</param>
+        /// <param name="address">The address to write the bytes to.</param>
+        /// <param name="length">The number of bytes to write.</param>
+        public void WriteBytes(byte[] buffer, int index, int address, int length)
+        {
+            if (buffer == null)
+            {
+                throw new ArgumentNullException(nameof(buffer));
+            }
+
+            if (index < 0 || (index == buffer.Length && length == 0) || index > buffer.Length - length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
+
+            if (address < 0 || address > this.size - length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(address));
+            }
+
+            if (length < 0 || length > buffer.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(length));
+            }
+
+            while (length > 0)
+            {
+                SelectPage(address);
+
+                var amountToWrite = Math.Min(length, this.nextPageStart - address);
+                Array.Copy(buffer, index, this.currentPage, address - this.currentPageStart, amountToWrite);
+
+                length -= amountToWrite;
+                address += amountToWrite;
+                index += amountToWrite;
+            }
+        }
+
         public int Size => size;
         public int PageSize => pageSize;
 
