@@ -1,0 +1,67 @@
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:c="clr-namespace:Emulation.Debugger.Controls"
+        xmlns:mvvm="clr-namespace:Emulation.Debugger.MVVM"
+        xmlns:vm="clr-namespace:Emulation.Debugger.ViewModels"
+        mc:Ignorable="d" 
+        d:DataContext="{d:DesignInstance vm:MainWindowViewModel}"
+        Width="1024" Height="768"
+        ResizeMode="CanResizeWithGrip"
+        Title="{Binding Title}"
+        mvvm:ViewModel.RegisterCommands="{Binding}">
+
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="{x:Type c:AutoDisableImage}">
+                <Setter Property="Height" Value="16"/>
+                <Setter Property="Width" Value="16"/>
+            </Style>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="24"/>
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open File..." Command="{Binding OpenFileCommand}">
+                    <MenuItem.Icon>
+                        <c:AutoDisableImage Source="{StaticResource OpenImage}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="E_xit" Command="{Binding ExitCommand}"/>
+            </MenuItem>
+        </Menu>
+
+        <ToolBarTray Grid.Row="1"
+                     RenderOptions.BitmapScalingMode="NearestNeighbor">
+
+            <ToolBar ToolBarTray.IsLocked="True">
+                <Button Command="{Binding OpenFileCommand}" ToolTip="Open file">
+                    <c:AutoDisableImage Source="{StaticResource OpenImage}"/>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Name="Memory" Grid.Column="1">
+
+            </Border>
+        </Grid>
+
+        <StatusBar Grid.Row="3">
+
+        </StatusBar>
+    </Grid>
+</Window>

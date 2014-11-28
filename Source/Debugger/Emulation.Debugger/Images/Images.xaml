@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Emulation.Debugger.Images">
+
+    <BitmapImage x:Key="OpenImage" UriSource="open.png"/>
+
+    <BitmapImage x:Key="StepIntoImage" UriSource="step-into.png"/>
+    <BitmapImage x:Key="StepOutImage" UriSource="step-out.png"/>
+    <BitmapImage x:Key="StepOverImage" UriSource="step-over.png"/>
+
+</ResourceDictionary>

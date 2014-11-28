@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emulation.6502", "Source\Em
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emulation.6502.Tests", "Source\Emulator-6502\Emulation.6502.Tests\Emulation.6502.Tests.csproj", "{46B92D53-393F-4E2B-916F-F969CF3342A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emulation.Debugger", "Source\Debugger\Emulation.Debugger\Emulation.Debugger.csproj", "{1D9B5D54-7345-47A0-B6BF-6A2D3D400A44}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Debugger", "Debugger", "{0D1029BC-50D4-42F3-AA34-1FA0F11F85F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +41,10 @@ Global
 		{46B92D53-393F-4E2B-916F-F969CF3342A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46B92D53-393F-4E2B-916F-F969CF3342A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46B92D53-393F-4E2B-916F-F969CF3342A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D9B5D54-7345-47A0-B6BF-6A2D3D400A44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D9B5D54-7345-47A0-B6BF-6A2D3D400A44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D9B5D54-7345-47A0-B6BF-6A2D3D400A44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D9B5D54-7345-47A0-B6BF-6A2D3D400A44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,5 +54,6 @@ Global
 		{07FE0C7B-E16C-4ABD-9839-63724A69034B} = {90641997-545E-48B4-A9D8-D3E97F7229C3}
 		{86221E48-A427-4ACF-ACEE-54F03129A250} = {1F968903-C928-496D-B6FE-3DEDDE6117AD}
 		{46B92D53-393F-4E2B-916F-F969CF3342A1} = {1F968903-C928-496D-B6FE-3DEDDE6117AD}
+		{1D9B5D54-7345-47A0-B6BF-6A2D3D400A44} = {0D1029BC-50D4-42F3-AA34-1FA0F11F85F8}
 	EndGlobalSection
 EndGlobal

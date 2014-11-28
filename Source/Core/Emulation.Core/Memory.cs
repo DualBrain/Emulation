@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 
 namespace Emulation.Core
 {
@@ -15,9 +17,14 @@ namespace Emulation.Core
         private int currentPageStart;
         private int nextPageStart;
 
-        public static Memory Create(int size = 4096, int pageSize = 4096)
+        public static Memory CreateEmpty(int size = 4096, int pageSize = 4096)
         {
             return new Memory(size, pageSize);
+        }
+
+        public static Memory CreateFromStream(Stream stream, int pageSize = 4096)
+        {
+            return new Memory(stream, pageSize);
         }
 
         private Memory(int size, int pageSize)
@@ -32,6 +39,43 @@ namespace Emulation.Core
             }
 
             this.pages = new byte[this.pageCount][];
+        }
+
+        private Memory(Stream stream, int pageSize)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
+            var pages = new List<byte[]>();
+            var size = 0;
+
+            while (true)
+            {
+                // Check to see if we've reached the end of the stream.
+                var nextByte = stream.ReadByte();
+                if (nextByte == -1)
+                {
+                    break;
+                }
+
+                var page = new byte[pageSize];
+
+                page[0] = (byte)nextByte;
+                size++;
+
+                pages.Add(page);
+
+                int read = stream.Read(page, 1, pageSize - 1);
+
+                size += read;
+            }
+
+            this.size = size;
+            this.pageSize = pageSize;
+            this.pageCount = pages.Count;
+            this.pages = pages.ToArray();
         }
 
         private void SelectPage(int address)
