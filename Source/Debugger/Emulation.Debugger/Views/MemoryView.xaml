@@ -7,7 +7,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d">
     <Grid>
-        
+
         <Grid.Style>
             <Style TargetType="Grid">
                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -18,11 +18,11 @@
                 </Style.Triggers>
             </Style>
         </Grid.Style>
-        
+
         <Border BorderBrush="Silver"
                 BorderThickness="1"
                 Padding="1">
-            
+
             <ItemsControl FontFamily="Consolas"
                       FontSize="12"
                       ItemsSource="{Binding Lines}"
@@ -38,7 +38,7 @@
                                 BorderBrush="Silver">
 
                                 <TextBlock Margin="0,0,8,0"
-                                       Text="{Binding Address, StringFormat=\{0:x4\}}"/>
+                                       Text="{Binding AddressText}"/>
 
                             </Border>
 
@@ -91,15 +91,17 @@
                             BorderBrush="{TemplateBinding Border.BorderBrush}"
                             Background="{TemplateBinding Panel.Background}"
                             SnapsToDevicePixels="True">
+
                             <ScrollViewer Padding="8,2,2,2"
-                                      Focusable="False">
+                                          Focusable="False">
                                 <ItemsPresenter SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
                             </ScrollViewer>
+
                         </Border>
                     </ControlTemplate>
                 </ItemsControl.Template>
             </ItemsControl>
-            
+
         </Border>
     </Grid>
 </UserControl>
