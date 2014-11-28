@@ -228,5 +228,41 @@ namespace Emulation.Core.Tests
                 }
             }
         }
+
+        [Fact(DisplayName = "Call ReadBytes()")]
+        public void ReadBytes()
+        {
+            var memory = Memory.CreateEmpty(size: 64 * 1024);
+
+            for (int i = 0; i < memory.Size; i++)
+            {
+                memory.WriteByte(i, Helpers.IndexToByte(i));
+            }
+
+            byte[] buffer = new byte[8192];
+            memory.ReadBytes(buffer, 256, 256, buffer.Length - 256);
+
+            for (int i = 256; i < 8192; i++)
+            {
+                Assert.Equal(Helpers.IndexToByte(i), buffer[i]);
+            }
+        }
+
+        [Fact(DisplayName = "Call ReadBytes() with bad arguments")]
+        public void ReadBytesWithBadArguments()
+        {
+            var memory = Memory.CreateEmpty(size: 64 * 1024);
+
+            Assert.Throws<ArgumentNullException>(() => memory.ReadBytes(null, 0, 0, 0));
+            Assert.Throws<ArgumentOutOfRangeException>(() => memory.ReadBytes(new byte[1024], -1, 0, 0));
+            Assert.Throws<ArgumentOutOfRangeException>(() => memory.ReadBytes(new byte[1024], 1024, 0, 0));
+            Assert.Throws<ArgumentOutOfRangeException>(() => memory.ReadBytes(new byte[1024], 0, -1, 0));
+            Assert.Throws<ArgumentOutOfRangeException>(() => memory.ReadBytes(new byte[1024], 0, (64 * 1024) + 1, 0));
+            Assert.Throws<ArgumentOutOfRangeException>(() => memory.ReadBytes(new byte[1024], 0, (64 * 1024), 1));
+            Assert.Throws<ArgumentOutOfRangeException>(() => memory.ReadBytes(new byte[1024], 0, 0, -1));
+            Assert.Throws<ArgumentOutOfRangeException>(() => memory.ReadBytes(new byte[1024], 0, 0, (64 * 1024) + 1));
+            Assert.Throws<ArgumentOutOfRangeException>(() => memory.ReadBytes(new byte[1024], 0, 0, (64 * 1024) + 1));
+            Assert.Throws<ArgumentException>(() => memory.ReadBytes(new byte[1024], 0, 0, 1025));
+        }
     }
 }

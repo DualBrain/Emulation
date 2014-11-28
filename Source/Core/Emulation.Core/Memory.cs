@@ -249,6 +249,57 @@ namespace Emulation.Core
             }
         }
 
+        /// <summary>
+        /// Read bytes from the specified <paramref name="address"/> and copy them into
+        /// the passed <paramref name="buffer"/> at the given <paramref name="index"/>.
+        /// The number of bytes to be read is specified by <paramref name="length"/>.
+        /// </summary>
+        /// <param name="buffer">The byte array to copy the read bytes into.</param>
+        /// <param name="index">The index into <paramref name="buffer"/> to copy the read bytes.</param>
+        /// <param name="address">The address to read the bytes from.</param>
+        /// <param name="length">The number of bytes to read.</param>
+        public void ReadBytes(byte[] buffer, int index, int address, int length)
+        {
+            if (buffer == null)
+            {
+                throw new ArgumentNullException(nameof(buffer));
+            }
+
+            if (index < 0 || index >= buffer.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
+
+            if (address < 0 || address > this.size - length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(address));
+            }
+
+            if (length < 0 || length > this.size)
+            {
+                throw new ArgumentOutOfRangeException(nameof(length));
+            }
+
+            if (buffer.Length - index < length)
+            {
+                throw new ArgumentException(
+                    "There is not enough room in \{nameof(buffer)} to copy \{length} bytes to index \{index}.",
+                    paramName: nameof(buffer));
+            }
+
+            while (length > 0)
+            {
+                SelectPage(address);
+
+                var amountToRead = Math.Min(length, this.nextPageStart - address);
+                Array.Copy(this.currentPage, address - this.currentPageStart, buffer, index, amountToRead);
+
+                length -= amountToRead;
+                address += amountToRead;
+                index += amountToRead;
+            }
+        }
+
         public int Size => size;
         public int PageSize => pageSize;
 
