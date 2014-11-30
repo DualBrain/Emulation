@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel.Composition;
+using System.Windows;
 using System.Windows.Controls;
+using Emulation.Debugger.Extensions;
 using Emulation.Debugger.MVVM;
 using Emulation.Debugger.Services;
 
@@ -31,14 +33,15 @@ namespace Emulation.Debugger.ViewModels
         {
             var memory = this.fileService.Memory;
             var size = memory.Size;
-            var hexWidth = (int)Math.Log10(memory.Size);
+
+            var hexWidth = Math.Max(1, (int)Math.Ceiling(Math.Log(size, 16)));
 
             this.lines.BeginBulkOperation();
             try
             {
                 this.lines.EnsureCapacity((size / 8) + 1);
 
-                for (int address = 0; address < size; address += 8)
+                for (int address = 0; address < size; address += 16)
                 {
                     this.lines.Add(new MemoryLineViewModel(memory, address, hexWidth));
                 }
@@ -48,6 +51,8 @@ namespace Emulation.Debugger.ViewModels
                 this.lines.EndBulkOperation();
             }
 
+            ScrollToTop();
+
             PropertyChanged(nameof(HasData));
         }
 
@@ -56,6 +61,12 @@ namespace Emulation.Debugger.ViewModels
             this.lines.Clear();
 
             PropertyChanged(nameof(HasData));
+        }
+
+        private void ScrollToTop()
+        {
+            var items = this.View.FindName<ItemsControl>("Items");
+            items.BringIntoView(this.lines[0]);
         }
 
         public bool HasData => this.lines.Count > 0;
