@@ -178,6 +178,8 @@ namespace Emulation.Core.Collections
             if (this.count > 0)
             {
                 Array.Clear(this.pages, 0, this.pages.Length);
+                this.currentPage = null;
+                this.currentPageIndex = -1;
                 this.count = 0;
             }
 

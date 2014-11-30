@@ -33,5 +33,13 @@ namespace Emulation.Debugger.ViewModels
         public byte? Byte6 => GetValue(this.address + 5);
         public byte? Byte7 => GetValue(this.address + 6);
         public byte? Byte8 => GetValue(this.address + 7);
+        public byte? Byte9 => GetValue(this.address + 8);
+        public byte? Byte10 => GetValue(this.address + 9);
+        public byte? Byte11 => GetValue(this.address + 10);
+        public byte? Byte12 => GetValue(this.address + 11);
+        public byte? Byte13 => GetValue(this.address + 12);
+        public byte? Byte14 => GetValue(this.address + 13);
+        public byte? Byte15 => GetValue(this.address + 14);
+        public byte? Byte16 => GetValue(this.address + 15);
     }
 }

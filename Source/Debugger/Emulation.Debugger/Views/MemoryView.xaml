@@ -23,12 +23,13 @@
                 BorderThickness="1"
                 Padding="1">
 
-            <ItemsControl FontFamily="Consolas"
-                      FontSize="12"
-                      ItemsSource="{Binding Lines}"
-                      VirtualizingStackPanel.IsVirtualizing="True"
-                      VirtualizingStackPanel.VirtualizationMode="Recycling"
-                      ScrollViewer.CanContentScroll="True">
+            <ItemsControl Name="Items"
+                          FontFamily="Consolas"
+                          FontSize="12"
+                          ItemsSource="{Binding Lines}"
+                          VirtualizingStackPanel.IsVirtualizing="True"
+                          VirtualizingStackPanel.VirtualizationMode="Recycling"
+                          ScrollViewer.CanContentScroll="True">
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -70,9 +71,41 @@
                                    Foreground="Navy"
                                    Text="{Binding Byte7, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
 
-                            <TextBlock Margin="8,0,8,0"
+                            <TextBlock Margin="8,0,0,0"
                                    Foreground="Navy"
                                    Text="{Binding Byte8, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
+
+                            <TextBlock Margin="8,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Byte9, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
+
+                            <TextBlock Margin="8,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Byte10, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
+
+                            <TextBlock Margin="8,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Byte11, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
+
+                            <TextBlock Margin="8,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Byte12, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
+
+                            <TextBlock Margin="8,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Byte13, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
+
+                            <TextBlock Margin="8,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Byte14, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
+
+                            <TextBlock Margin="8,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Byte15, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
+
+                            <TextBlock Margin="8,0,8,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Byte16, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
 
                         </StackPanel>
                     </DataTemplate>
