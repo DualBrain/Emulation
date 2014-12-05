@@ -103,9 +103,73 @@
                                    Foreground="Navy"
                                    Text="{Binding Byte15, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
 
-                            <TextBlock Margin="8,0,8,0"
+                            <TextBlock Margin="8,0,0,0"
                                    Foreground="Navy"
                                    Text="{Binding Byte16, TargetNullValue={x:Static sys:String.Empty}, StringFormat=\{0:x2\}}"/>
+
+                            <TextBlock Margin="32,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Char1, TargetNullValue=' '}"/>
+
+                            <TextBlock Margin="2,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Char2, TargetNullValue=' '}"/>
+
+                            <TextBlock Margin="2,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Char3, TargetNullValue=' '}"/>
+
+                            <TextBlock Margin="2,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Char4, TargetNullValue=' '}"/>
+
+                            <TextBlock Margin="2,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Char5, TargetNullValue=' '}"/>
+
+                            <TextBlock Margin="2,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Char6, TargetNullValue=' '}"/>
+
+                            <TextBlock Margin="2,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Char7, TargetNullValue=' '}"/>
+
+                            <TextBlock Margin="2,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Char8, TargetNullValue=' '}"/>
+
+                            <TextBlock Margin="2,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Char9, TargetNullValue=' '}"/>
+
+                            <TextBlock Margin="2,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Char10, TargetNullValue=' '}"/>
+
+                            <TextBlock Margin="2,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Char11, TargetNullValue=' '}"/>
+
+                            <TextBlock Margin="2,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Char12, TargetNullValue=' '}"/>
+
+                            <TextBlock Margin="2,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Char13, TargetNullValue=' '}"/>
+
+                            <TextBlock Margin="2,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Char14, TargetNullValue=' '}"/>
+
+                            <TextBlock Margin="2,0,0,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Char15, TargetNullValue=' '}"/>
+
+                            <TextBlock Margin="2,0,8,0"
+                                   Foreground="Navy"
+                                   Text="{Binding Char16, TargetNullValue=' '}"/>
 
                         </StackPanel>
                     </DataTemplate>
